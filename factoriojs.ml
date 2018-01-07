@@ -199,7 +199,6 @@ type settings =
     mutable assembling_machine_3: bool;
     mutable petroleum_gas: [ `basic | `advanced | `cracking ];
     mutable drill_electric_modules: module_settings;
-    mutable pumpjack_modules: module_settings;
     mutable furnace_electric_modules: module_settings;
     mutable assembling_machine_2_modules: module_settings;
     mutable assembling_machine_3_modules: module_settings;
@@ -224,7 +223,6 @@ let settings =
     assembling_machine_3 = true;
     petroleum_gas = `cracking;
     drill_electric_modules = no_bonuses;
-    pumpjack_modules = no_bonuses;
     furnace_electric_modules = no_bonuses;
     assembling_machine_2_modules = no_bonuses;
     assembling_machine_3_modules = no_bonuses;
@@ -353,8 +351,6 @@ let rec apply_settings (resource: resource) =
     in
     if name = electric_mining_drill.name then
       apply settings.drill_electric_modules
-    else if name = pumpjack.name then
-      apply settings.pumpjack_modules
     else if name = electric_furnace.name then
       apply settings.furnace_electric_modules
     else if name = assembling_machine_2.name then
@@ -453,7 +449,6 @@ let make_hash () =
         | `cracking -> "2"
     ) ::
     make_module_hash settings.drill_electric_modules ::
-    make_module_hash settings.pumpjack_modules ::
     make_module_hash settings.furnace_electric_modules ::
     make_module_hash settings.assembling_machine_2_modules ::
     make_module_hash settings.assembling_machine_3_modules ::
@@ -589,8 +584,6 @@ let parse_hash hash =
   );
   parse_module_bonuses
     (fun x -> settings.drill_electric_modules <- x);
-  parse_module_bonuses
-    (fun x -> settings.pumpjack_modules <- x);
   parse_module_bonuses
     (fun x -> settings.furnace_electric_modules <- x);
   parse_module_bonuses
@@ -749,9 +742,6 @@ let () =
       module_settings "Electric Mining Drill"
         (fun () -> settings.drill_electric_modules)
         (fun x -> settings.drill_electric_modules <- x);
-      module_settings "Pumpjack"
-        (fun () -> settings.pumpjack_modules)
-        (fun x -> settings.pumpjack_modules <- x);
       module_settings "Electric Furnace"
         (fun () -> settings.furnace_electric_modules)
         (fun x -> settings.furnace_electric_modules <- x);
