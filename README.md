@@ -1,8 +1,11 @@
-# Factorio Planner
+# Factorio Planner for use with the omni mods
 
 Factorio Planner helps you plan your factories by computing how many
 resources and machines you need to produce a given throughput of
 resources. Try it here: http://doomeer.com/factorio
+
+This fork contains recipes for use with the omnicompression, omnifluid 
+and omniore mods. I only kept recipes that are relevant for rocket launching and science.
 
 ## Architecture
 
@@ -34,8 +37,8 @@ Alternatively, you can use OPAM (OCaml Package Manager, https://opam.ocaml.org):
 
     sudo apt-get install opam
     opam init
-    opam switch 4.02.3
     opam install js_of_ocaml
+    opam install js_of_ocaml-camlp4
 
 ### Windows:
 
@@ -43,12 +46,12 @@ Download OCaml for Windows here: https://fdopen.github.io/opam-repository-mingw/
 Open the OCaml terminal that the installation produces and run the following:
 
     opam init
-    opam switch 4.02.3
     opam install js_of_ocaml
+    opam install js_of_ocaml-camlp4
 
 ## Compile Factorio Planner
 
-Just run:
+Just cd to the directory and run:
 
     make
 

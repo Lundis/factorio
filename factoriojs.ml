@@ -104,7 +104,7 @@ let rec gui_icon alt =
             done;
             src
     in
-    let src = "https://wiki.factorio.com/images/"^src^".png" in
+    let src = "https://wiki.factorio.com/images/"^Bytes.to_string src ^".png" in
     let href =
       match Hashtbl.find special_hrefs alt with
         | href ->
@@ -120,7 +120,7 @@ let rec gui_icon alt =
             done;
             href
     in
-    let href = "https://wiki.factorio.com/index.php?title="^href in
+    let href = "https://wiki.factorio.com/index.php?title="^ Bytes.to_string href in
     a ~href [ img ~class_: "icon" ~alt ~title: alt src ]
 
 let last_hash = ref ""
