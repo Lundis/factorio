@@ -39,6 +39,7 @@ Alternatively, you can use OPAM (OCaml Package Manager, https://opam.ocaml.org):
     opam init
     opam install js_of_ocaml
     opam install js_of_ocaml-camlp4
+    opam install batteries
 
 ### Windows:
 
@@ -48,6 +49,7 @@ Open the OCaml terminal that the installation produces and run the following:
     opam init
     opam install js_of_ocaml
     opam install js_of_ocaml-camlp4
+    opam install batteries
 
 ## Compile Factorio Planner
 

@@ -24,6 +24,12 @@
 open Factorio
 open Recipes
 open Html
+open Batteries
+
+let fixNameForURL name = 
+  let (b1, s1) = String.replace name "_compact" "" in
+    let (b2, s2) = String.replace s1 "_nanite" "" in
+      s2;;
 
 type gui_resource =
   {
@@ -104,7 +110,7 @@ let rec gui_icon alt =
             done;
             src
     in
-    let src = "https://wiki.factorio.com/images/"^Bytes.to_string src ^".png" in
+    let src = "https://wiki.factorio.com/images/"^fixNameForURL (Bytes.to_string src) ^".png" in
     let href =
       match Hashtbl.find special_hrefs alt with
         | href ->
@@ -219,16 +225,16 @@ let settings =
     furnace_steel = false;
     furnace_electric = true;
     assembling_machine_1 = false;
-    assembling_machine_2 = true;
+    assembling_machine_2 = false;
     assembling_machine_3 = true;
-    petroleum_gas = `cracking;
+    petroleum_gas = `advanced;
     drill_electric_modules = no_bonuses;
     furnace_electric_modules = no_bonuses;
     assembling_machine_2_modules = no_bonuses;
     assembling_machine_3_modules = no_bonuses;
     chemical_plant_modules = no_bonuses;
     rocket_silo_modules = no_bonuses;
-    time_unit = Seconds;
+    time_unit = Minutes;
     update_gui = [];
   }
 
@@ -952,3 +958,4 @@ let () =
   in
   on_hash_change hash_change;
   gui
+

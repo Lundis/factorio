@@ -34,21 +34,20 @@ open Factorio
 (* Usage: maker name crafting_speed *)
 
 let burner_mining_drill = maker "Burner Mining Drill" 0.35    ~power: 2.5
-let electric_mining_drill = maker "Electric Mining Drill" 0.5 ~power: 3.
+let electric_mining_drill = maker "Electric Mining Drill Compact" 1. ~power: 6.
 let assembling_machine_1 = maker "Assembling Machine 1" 0.5
 let assembling_machine_2 = maker "Assembling Machine 2" 0.75
-let assembling_machine_3 = maker "Assembling Machine 3" 20.
+let assembling_machine_3 = maker "Assembling Machine 3 Nanite" 20.
 let stone_furnace = maker "Stone Furnace" 1.
 let steel_furnace = maker "Steel Furnace" 2.
-let electric_furnace = maker "Electric Furnace" 32.
-let chemical_plant_ = maker "Chemical Plant" 1.25
-let chemical_plant_nanite = maker "Chemical Plant" 20.
+let electric_furnace = maker "Electric Furnace Nanite" 32.
+let chemical_plant_ = maker "Chemical Plant Nanite" 20.
 let centrifuge = maker "Centrifuge" 0.75
-let rocket_silo = maker "Rocket Silo" 0.001
+let rocket_silo = maker "Rocket Silo" 1.
 let omnitractor_5_nanite = maker "Omnitractor 5 Nanite" 80.
-let offshose_pump_ = maker "Offshore pump" 16.
-let boiler_ = maker "Boiler" 16.
-let boiler_nuclear_ = maker "Boiler Nuclear" 16.
+let offshose_pump_ = maker "Offshore pump Nanite" 16.
+let boiler_ = maker "Boiler Nanite" 16.
+let boiler_nuclear_ = maker "Boiler Nuclear Nanite" 16.
 
 (* Shorthands for some commonly-used lists of makers. *)
 
@@ -116,7 +115,7 @@ let oil_processing = [ maker "Advanced oil processing" 1.]
 (* Resources *)
 
 let omnite =
-  res "Omni ore" drill 1. ~hardness: 0.9
+  res "Omni ore" drill 500. ~hardness: 0.9
     []
 let water =
   res "Water" offshore_pump 5. ~count: 1. ~style: Global
@@ -216,10 +215,11 @@ let electronic_circuit =
   res "Electronic Circuit" am1 50. ~allow_productivity: true
     [ 2., iron_plate; 3., copper_cable ]
 let advanced_circuit =
-  res "Advanced Circuit" am2 1200. ~allow_productivity: true
+  res "Advanced Circuit" am2 1200. ~style: Global ~allow_productivity: true 
     [ 2., electronic_circuit; 4., plastic_bar; 4., copper_cable ]
 let processing_unit =
-  res "Processing Unit" am2 20000. ~allow_productivity: true
+  res "Processing Unit" am2 20000. ~count: 20.
+    ~style: Global ~allow_productivity: true 
     [ 200., electronic_circuit; 20., advanced_circuit; 1., sulfuric_acid ]
 let pipe =
   res "Pipe" am1 50.
@@ -241,9 +241,40 @@ let lubricant =
 let electric_engine_unit =
   res "Electric Engine Unit" am2 8000. ~count: 16. ~allow_productivity: true
     [ 16., engine_unit; 8., electronic_circuit; 1., lubricant ]
+
+(* Logistics *)
+
 let transport_belt =
   res "Transport Belt" am1 50. ~count: 2.
     [ 1., iron_plate; 1., iron_gear_wheel ]
+let fast_transport_belt =
+  res "Fast Transport Belt" am1 50.
+    [ 1., transport_belt; 5., iron_gear_wheel ]
+let express_transport_belt =
+  res "Express Transport Belt" am2 0.5 ~count: 12.
+    [ 60., iron_gear_wheel; 6., fast_transport_belt; 1., lubricant ]
+
+let underground_belt =
+  res "Underground Belt" am1 100. ~count: 4.
+    [ 5., transport_belt; 10., iron_plate ]
+let fast_underground_belt =
+  res "Fast Underground Belt" am1 50. ~count: 1.
+    [ 10., iron_gear_wheel; 1., underground_belt ]
+let express_underground_belt =
+  res "Express Underground Belt" am1 600. ~count: 12.
+    [ 240., iron_gear_wheel; 12., fast_underground_belt; 1., lubricant ]
+
+let splitter =
+  res "Splitter" am2 200. ~count: 4.
+    [ 5., electronic_circuit; 10., iron_plate; 8., transport_belt ]
+let fast_splitter =
+  res "Fast Splitter" am2 200. ~count: 2.
+    [ 2., splitter; 10., iron_gear_wheel; 5., electronic_circuit ]
+let express_splitter =
+  res "Express Splitter" am2 600. ~count: 6.
+    [ 6., fast_splitter; 30., iron_gear_wheel; 15., advanced_circuit; 2., lubricant]
+
+(* Inserters *)
 let inserter =
   res "Inserter" am2 100.
     [ 2., iron_plate; 2., iron_gear_wheel; 1., electronic_circuit ]
@@ -372,6 +403,7 @@ let space_science_pack =
   res "Space Science Pack" [ rocket_silo ] 1. ~count: 1000.
     [ 100., rocket_part; 1., satellite ]
 
+
 (******************************************************************************)
 (*                              List of Resources                             *)
 (******************************************************************************)
@@ -453,7 +485,17 @@ let resources =
 
     (* Transport Belts *)
     transport_belt;
+    fast_transport_belt;
+    express_transport_belt;
 
+    underground_belt;
+    fast_underground_belt;
+    express_underground_belt;
+
+    splitter;
+    fast_splitter;
+    express_splitter;
+    
     (* Inserters *)
     inserter;
 

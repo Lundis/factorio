@@ -23,6 +23,7 @@ OCAMLBUILD := ocamlbuild
 OCAMLBUILD := $(OCAMLBUILD) -no-links
 OCAMLBUILD := $(OCAMLBUILD) -use-ocamlfind
 OCAMLBUILD := $(OCAMLBUILD) -tag annot
+OCAMLBUILD := $(OCAMLBUILD) -pkg batteries
 
 CLIENT = factoriojs.byte
 CLIENTJS = factorio.js
@@ -30,7 +31,7 @@ CLIENTJS = factorio.js
 default: $(CLIENTJS)
 
 $(CLIENTJS): _build/$(CLIENT)
-	js_of_ocaml _build/$(CLIENT) -o $(CLIENTJS)
+	js_of_ocaml +nat.js +weak.js _build/$(CLIENT) -o $(CLIENTJS)
 
 _build/$(CLIENT): factorio.ml factoriojs.ml recipes.ml html.ml html.mli
 	$(OCAMLBUILD) $(CLIENT)
